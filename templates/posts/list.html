@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block next_url %}{{ request.path }}{% endblock next_url %}
+{% block next_url2 %}{{ request.path }}{% endblock next_url2 %}
+
+{% block header_img %}
+    {% if biology %}
+        {% static 'img/biology.jpeg' %} 
+    {% elif physics %}
+        {% static 'img/physics01.jpeg' %}
+    {% elif chemistry %}
+        {% static 'img/chemistry.jpg' %}
+    {% elif mathematics %}
+        {% static 'img/mathematics.jpg' %}
+    {% endif %}
+{% endblock header_img %}
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+          {% for post in posts %}
+            <div class="post-preview">
+                <a href="#">
+                    <h2 class="post-title">
+                    {{ post.title }}
+                    </h2>
+                    <h3 class="post-subtitle">
+                    {{ post.description | truncatewords:20 }}
+                    </h3>
+                </a>
+                <p class="post-meta">Posted by
+                    <a href="#">{{ post.author }}</a>
+                    on {{ post.published_date }}</p>
+            </div>
+            {% endfor %}
+            <div class="clearfix">
+                <a class="btn btn-primary float-right" href="#">Older Posts &rarr;</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

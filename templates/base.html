@@ -1,0 +1,279 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Kali Blog</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Kali Thinkers</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        Menu
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Sample Post</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          {% if not user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link btn btn-outline-dark" href="#" data-toggle="modal" data-target="#modalLRForm">Login</a>
+            </li>
+          {% endif %}
+          {% if user.is_authenticated %}
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow float-right">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fas fa-user-circle text-secondary"></i>
+                  <span> <b> {{ user }}</b></span>
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item disable" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item disable" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item disable" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{% url 'logout' %}" >
+                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Logout
+                  </a>
+              </div>
+            </li>
+              {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <header class="masthead" style="background-image: url({% block header_img %}{% endblock header_img %})">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Kali Scientist's Blog</h1>
+            <span class="subheading">A Blog For Scientist and Technologists</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+{% block content %}{% endblock content %}
+
+  <hr>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <ul class="list-inline text-center">
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <span class="fa-stack fa-lg">
+                  <i class="fas fa-circle fa-stack-2x"></i>
+                  <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+              </a>
+            </li>
+          </ul>
+          <p class="copyright text-muted">Copyright &copy; Kali Association of Scientists</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!--Modal: Login / Register Form-->
+    <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog cascading-modal" role="document">
+          <!--Content-->
+          <div class="modal-content">
+      
+            <!--Modal cascading tabs-->
+            <div class="modal-c-tabs">
+      
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fas fa-user mr-1"></i>
+                    Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fas fa-user-plus mr-1"></i>
+                    Register</a>
+                </li>
+              </ul>
+      
+              <!-- Tab panels -->
+              <div class="tab-content">
+                <!--Panel 7-->
+                <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
+                    
+                <form method="POST" action="{% url 'login_user' %}">
+                    {% csrf_token %}
+                  <!--Body-->
+                  <div class="modal-body mb-1">
+                    <div class="form-group">
+                      <i class="fas fa-envelope prefix"></i>
+                      <input type="email" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" class="form-control validate">
+                      <label data-error="wrong" data-success="right" for="modalLRInput10">Your email</label>
+                    </div>
+      
+                    <div class="form-group">
+                      <i class="fas fa-lock prefix"></i>
+                      <input type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.name }}" class="form-control validate">
+                      <label data-error="wrong" data-success="right" for="modalLRInput11">Your password</label>
+                    </div>
+                    <hr>
+                    <div class="text-center mt-2">
+                      <button class="btn btn-info">Log in <i class="fas fa-sign-in ml-1"></i></button>
+                    </div>
+                  </div>
+                  <input type="hidden" name="next" id="next" value="{% block next_url %}{% endblock next_url %}">
+                </form>
+                
+                  <!--Footer-->
+                  <div class="modal-footer">
+                        <div class="col-9 mr-auto ml-auto">
+                            <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
+                            <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                        </div>
+                    <div class="clearfix">                      
+                      <button type="submit" class="btn btn-outline-info waves-effect ml-auto float-right" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+      
+                </div>
+                <!--/.Panel 7-->
+      
+                <!--Panel 8-->
+                <div class="tab-pane fade" id="panel8" role="tabpanel">
+      
+                  <!--Body-->
+                  <div class="modal-body">
+                    <form method="POST" action="{% url 'signup_user' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                          <i class="fas fa-user prefix"></i>
+                          <input type="text" id="id_username" name="username" class="form-control validate">
+                          <label data-error="wrong" data-success="right" for="id_username">Your Nickname</label>
+                        </div>
+
+                        <div class="form-group">
+                          <i class="fas fa-envelope prefix"></i>
+                          <input type="email" id="id_email" name="email" class="form-control validate">
+                          <label data-error="wrong" data-success="right" for="id_email">Your email</label>
+                        </div>
+        
+                        <div class="form-group">
+                        <i class="fas fa-lock prefix"></i>
+                        <input type="password" id="id_password1" name="password1" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="id_password1">Your password</label>
+                        </div>
+        
+                        <div class="form-group">
+                        <i class="fas fa-lock prefix"></i>
+                        <input type="password" id="id_password2" name="password2" class="form-control validate">
+                        <label data-error="wrong" data-success="right" for="id_password2">Repeat password</label>
+                        </div>
+        
+                        <div class="form-group mt-2">
+                        <button type="submit" class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
+                        </div>
+                        <input type="hidden" name="next" id="next" value="{% block next_url2 %}{% endblock next_url2 %}">
+                    </form>
+      
+                  </div>
+                  <!--Footer-->
+                  <div class="modal-footer">
+                    <div class="options text-right">
+                      <p class="pt-1">Already have an account? <a href="#" class="blue-text">Log In</a></p>
+                    </div>
+                    <button type="button" class="btn btn-outline-info ml-auto" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                <!--/.Panel 8-->
+              </div>
+      
+            </div>
+          </div>
+          <!--/.Content-->
+        </div>
+      </div>
+      <!--Modal: Login / Register Form-->
+      
+      <div class="text-center">
+        <a href="" class="btn btn-default-outline btn-rounded my-3" data-toggle="modal" data-target="#modalLRForm">
+          LogIn/Register</a>
+      </div>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="js/clean-blog.min.js"></script>
+
+</body>
+
+</html>

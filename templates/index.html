@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block next_url %}{{ request.path }}{% endblock next_url %}
+{% block next_url2 %}{{ request.path }}{% endblock next_url2 %}
+
+{% block header_img %} {% static 'img/science_bg_hd.jpg' %} {% endblock header_img %}
+
+{% block content %}
+
+
+<div class="fluid-container">
+    <div class="row">
+        <div class="col-10 mr-auto ml-auto">
+            <div class="row mb-5">
+                <div class="col-5 mr-auto ml-auto card shadow image-grid-item p-0" style="height:300px">
+                    <div style="background-image: url({% static 'img/chemistry.jpg' %}); background-size:100% 100%; height:100%; display:flex; align-items:center; padding-left:40%" class="image-grid-cover rounded">
+                        <a href="{% url 'list_posts' 2 %}" class="image-grid-clickbox"></a>
+                        <span class="align-middle">
+                            <a href="{% url 'list_posts' 2 %}" class="cover-wrapper text-light" style="font-size:35px;">Chemistry</a>
+                        </span>
+                        
+                    </div>
+                </div>
+                <div class="col-5 mr-auto ml-auto card shadow image-grid-item p-0">
+                    <div style="background-image: url({% static 'img/physics01.jpeg' %}); background-size:100% 100%; height:300px; display:flex; align-items:center; padding-left:40%" class="image-grid-cover rounded">
+                        <a href="{% url 'list_posts' 3 %}" class="image-grid-clickbox"></a>
+                        <a href="{% url 'list_posts' 3 %}" class="cover-wrapper text-light" style="font-size:35px;">Physics</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-5 mr-auto ml-auto card shadow image-grid-item p-0">
+                    <div style="background-image: url({% static 'img/biology.jpeg' %}); background-size:100% 100%; height:300px; display:flex; align-items:center; padding-left:40%" class="image-grid-cover rounded">
+                        <a href="{% url 'list_posts' 1 %}" class="image-grid-clickbox"></a>
+                        <a href="{% url 'list_posts' 1 %}" class="cover-wrapper text-light" style="font-size:35px;">Biology</a>
+                    </div>
+                </div>
+                <div class="col-5 mr-auto ml-auto card shadow image-grid-item p-0">
+                    <div style="background-image: url({% static 'img/mathematics.jpg' %}); background-size:100% 100%; height:300px; display:flex; align-items:center; padding-left:40%" class="image-grid-cover rounded">
+                        <a href="{% url 'list_posts' 4 %}" class="image-grid-clickbox"></a>
+                        <a href="{% url 'list_posts' 4 %}" class="cover-wrapper text-light" style="font-size:35px;">Mathematics</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
