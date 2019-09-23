@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block login_color %}dark{% endblock login_color %}
+
 {% block next_url %}{{ request.path }}{% endblock next_url %}
 {% block next_url2 %}{{ request.path }}{% endblock next_url2 %}
 

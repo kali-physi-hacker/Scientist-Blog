@@ -22,6 +22,9 @@
   <!-- Custom styles for this template -->
   <link href="{% static 'css/clean-blog.min.css' %}" rel="stylesheet">
 
+  {% block custom_style %}
+  {% endblock custom_style %}
+
 </head>
 
 <body>
@@ -29,7 +32,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Kali Thinkers</a>
+      <a class="navbar-brand" href="/">Kali Thinkers</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         Menu
         <i class="fas fa-bars"></i>
@@ -50,18 +53,17 @@
           </li>
           {% if not user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link btn btn-outline-dark" href="#" data-toggle="modal" data-target="#modalLRForm">Login</a>
+              <a class="nav-link btn btn-outline-{% block login_color %}{% endblock login_color %}" href="#" data-toggle="modal" data-target="#myModal">Login</a>
             </li>
           {% endif %}
           {% if user.is_authenticated %}
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow float-right">
-              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <i class="fas fa-user-circle text-secondary"></i>
-                  <span> <b> {{ user }}</b></span>
+              <a style="text-transform:capitalize" class="nav-link dropdown-toggle text-light btn btn-primary" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span> <b> {{ user | capfirst }}</b></span>
               </a>
               <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+              <div class="dropdown-menu shadow animated--grow-in" aria-labelledby="userDropdown">
                 <a class="dropdown-item disable" href="#">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
@@ -87,21 +89,24 @@
     </div>
   </nav>
 
+  
   <!-- Page Header -->
-  <header class="masthead" style="background-image: url({% block header_img %}{% endblock header_img %})">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>Kali Scientist's Blog</h1>
-            <span class="subheading">A Blog For Scientist and Technologists</span>
+  {% block header %}
+    <header class="masthead" style="background-image: url({% block header_img %}{% endblock header_img %})">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="site-heading">
+              <h1>Kali Scientist's Blog</h1>
+              <span class="subheading">A Blog For Scientist and Technologists</span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
+  {% endblock header %}
   <!-- Main Content -->
 {% block content %}{% endblock content %}
 
@@ -139,133 +144,90 @@
             </li>
           </ul>
           <p class="copyright text-muted">Copyright &copy; Kali Association of Scientists</p>
+          <h4>The Quietor you become, The more you are able to hear</h4>
         </div>
       </div>
     </div>
   </footer>
   <!--Modal: Login / Register Form-->
-    <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog cascading-modal" role="document">
-          <!--Content-->
-          <div class="modal-content">
-      
-            <!--Modal cascading tabs-->
-            <div class="modal-c-tabs">
-      
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#panel7" role="tab"><i class="fas fa-user mr-1"></i>
-                    Login</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#panel8" role="tab"><i class="fas fa-user-plus mr-1"></i>
-                    Register</a>
-                </li>
-              </ul>
-      
-              <!-- Tab panels -->
-              <div class="tab-content">
-                <!--Panel 7-->
-                <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
-                    
-                <form method="POST" action="{% url 'login_user' %}">
-                    {% csrf_token %}
-                  <!--Body-->
-                  <div class="modal-body mb-1">
-                    <div class="form-group">
-                      <i class="fas fa-envelope prefix"></i>
-                      <input type="email" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" class="form-control validate">
-                      <label data-error="wrong" data-success="right" for="modalLRInput10">Your email</label>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="Labeled Modal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="mx-auto">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item mr-5"><a href="#login" role="tab" data-toggle="tab" class="nav-link active">
+                                Login <i class="fa fa-user"></i>
+                            </a></li>
+                            <li class="nav-item">
+                                <a href="#signup" role="tab" data-toggle="tab" class="nav-link">
+                                    Don't Have An Account <i class="fa fa-user-plus"></i>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-      
-                    <div class="form-group">
-                      <i class="fas fa-lock prefix"></i>
-                      <input type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.name }}" class="form-control validate">
-                      <label data-error="wrong" data-success="right" for="modalLRInput11">Your password</label>
-                    </div>
-                    <hr>
-                    <div class="text-center mt-2">
-                      <button class="btn btn-info">Log in <i class="fas fa-sign-in ml-1"></i></button>
-                    </div>
-                  </div>
-                  <input type="hidden" name="next" id="next" value="{% block next_url %}{% endblock next_url %}">
-                </form>
-                
-                  <!--Footer-->
-                  <div class="modal-footer">
-                        <div class="col-9 mr-auto ml-auto">
-                            <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
-                            <p>Forgot <a href="#" class="blue-text">Password?</a></p>
-                        </div>
-                    <div class="clearfix">                      
-                      <button type="submit" class="btn btn-outline-info waves-effect ml-auto float-right" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-      
+                    <button type="button" class="close ml-0" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <!--/.Panel 7-->
-      
-                <!--Panel 8-->
-                <div class="tab-pane fade" id="panel8" role="tabpanel">
-      
-                  <!--Body-->
-                  <div class="modal-body">
-                    <form method="POST" action="{% url 'signup_user' %}">
-                        {% csrf_token %}
-                        <div class="form-group">
-                          <i class="fas fa-user prefix"></i>
-                          <input type="text" id="id_username" name="username" class="form-control validate">
-                          <label data-error="wrong" data-success="right" for="id_username">Your Nickname</label>
+                <div class="modal-body">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="login">
+                            <form action="{% url 'login_user'%}" method="POST">
+                              {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="uname">Username</label>
+                                    <i class="fa fa-envelope"></i>
+                                    <input type="email" class="form-control" id="id_email" name="email" autofocus />
+                                </div>
+                                <div class="form-group">
+                                    <label for="pword">Password</label>
+                                    <i class="fa fa-key"></i>
+                                    <input type="password" class="form-control" id="id_password" name="password" />
+                                </div>
+                                <div class="clearfix mb-3 mt-3">
+                                    <button type="submit" class="btn btn-md btn-primary mx-auto rounded">Login</button>
+                                </div>
+                                <input type="hidden" name="next" id="next" value="{% block next_url %}{% endblock next_url %}">
+                            </form>
                         </div>
-
-                        <div class="form-group">
-                          <i class="fas fa-envelope prefix"></i>
-                          <input type="email" id="id_email" name="email" class="form-control validate">
-                          <label data-error="wrong" data-success="right" for="id_email">Your email</label>
+                        
+                        <div class="tab-pane fade in" id="signup">
+                            <form method="POST" action="{% url 'signup_user' %}">
+                                <div class="form-group">
+                                    <label for="uname">Username</label>
+                                    <i class="fa fa-user"></i>
+                                    <input type="text" class="form-control" id="id_username" name="username" autofocus />
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <i class="fas fa-envelope"></i>
+                                    <input type="email" class="form-control" id="id_email" name="email" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="pword">Password</label>
+                                    <i class="fa fa-key"></i>
+                                    <input type="password" class="form-control" id="id_password1" name="password1" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="pword1">Confirm Password</label>
+                                    <i class="fa fa-key"></i>
+                                    <input type="password" class="form-control" id="id_password2" name="password2" />
+                                </div>
+                                <div class="clearfix">
+                                  <button type="submit" class="btn btn-md btn-primary rounded float-right">Create Account</button>
+                                </div>
+                                <input type="hidden" name="next" id="next" value="{% block next_url2 %}{% endblock next_url2 %}">
+                            </form>
                         </div>
-        
-                        <div class="form-group">
-                        <i class="fas fa-lock prefix"></i>
-                        <input type="password" id="id_password1" name="password1" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="id_password1">Your password</label>
-                        </div>
-        
-                        <div class="form-group">
-                        <i class="fas fa-lock prefix"></i>
-                        <input type="password" id="id_password2" name="password2" class="form-control validate">
-                        <label data-error="wrong" data-success="right" for="id_password2">Repeat password</label>
-                        </div>
-        
-                        <div class="form-group mt-2">
-                        <button type="submit" class="btn btn-info">Sign up <i class="fas fa-sign-in ml-1"></i></button>
-                        </div>
-                        <input type="hidden" name="next" id="next" value="{% block next_url2 %}{% endblock next_url2 %}">
-                    </form>
-      
-                  </div>
-                  <!--Footer-->
-                  <div class="modal-footer">
-                    <div class="options text-right">
-                      <p class="pt-1">Already have an account? <a href="#" class="blue-text">Log In</a></p>
                     </div>
-                    <button type="button" class="btn btn-outline-info ml-auto" data-dismiss="modal">Close</button>
-                  </div>
                 </div>
-                <!--/.Panel 8-->
-              </div>
-      
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary mr-auto" data-dismiss="modal">Close</button>
+                    </div>
             </div>
-          </div>
-          <!--/.Content-->
         </div>
-      </div>
-      <!--Modal: Login / Register Form-->
-      
-      <div class="text-center">
-        <a href="" class="btn btn-default-outline btn-rounded my-3" data-toggle="modal" data-target="#modalLRForm">
-          LogIn/Register</a>
-      </div>
+    </div>
 
   <!-- Bootstrap core JavaScript -->
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>

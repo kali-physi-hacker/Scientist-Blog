@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block login_color %}{{ login_color }}{% endblock login_color %}
+
+{% block next_url %}{{ request.path }}{% endblock next_url %}
+{% block next_url2 %}{{ request.path }}{% endblock next_url2 %}
+
+{% block header_img %}
+    {% if biology %}
+        {% static 'img/biology.jpeg' %} 
+    {% elif physics %}
+        {% static 'img/physics01.jpeg' %}
+    {% elif chemistry %}
+        {% static 'img/chemistry.jpg' %}
+    {% elif mathematics %}
+        {% static 'img/mathematics.jpg' %}
+    {% endif %}
+{% endblock header_img %}
+
+{% block content %}
+
+    <div class="container" >
+        <div class="row shadow">
+            <div class="col-7 mr-auto ml-auto mt-3">
+
+                <form action="{% url 'create_post' category %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="{{ form.title.label_for_id }}">Title</label>
+                        <input type="text" class="form-control border-0 shadow" id="{{ form.title.label_for_id }}" name="{{ form.title.name }}" required autofocus />
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.description.label_for_id }}">Description</label>
+                        <textarea id="{{ form.description.label_for_id }}" name="{{ form.description.name }}" class="form-control border-0 shadow" required rows=18></textarea>
+                    </div>
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-md btn-secondary shadow float-right mb-5 mt-3">Publish</button>
+                    </div>
+                
+                {% csrf_token %}
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
