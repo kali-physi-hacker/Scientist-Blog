@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block login_color %}{{ login_color }}{% endblock login_color %}
+
+{% block next_url %}{{ request.path }}{% endblock next_url %}
+{% block next_url2 %}{{ request.path }}{% endblock next_url2 %}
+
+{% if post.post_img.url %}
+    {% block header_img %}
+        {{ post.post_img.url }}
+    {% endblock header_img %}
+{% endif %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="post-preview">
+                    <a>
+                        <h2 class="post-title">
+                        {{ post.title }}
+                        </h2>
+                        <p class="post-subtitle">
+                        {{ post.description | safe }}
+                        </p>
+                    </a>
+                    <p class="post-meta">Posted by
+                        <a href="#">{{ post.author }}</a>
+                        on {{ post.published_date }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}

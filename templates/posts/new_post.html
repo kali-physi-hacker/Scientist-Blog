@@ -23,27 +23,40 @@
 
     <div class="container" >
         <div class="row shadow">
-            <div class="col-7 mr-auto ml-auto mt-3">
-
-                <form action="{% url 'create_post' category %}" method="POST">
+            <div class="col-10 mr-auto ml-auto mt-3 pb-3 border-0">
+                <form method="post" action="{% url 'create_post' category 1 %}">
                     {% csrf_token %}
                     <div class="form-group">
-                        <label for="{{ form.title.label_for_id }}">Title</label>
-                        <input type="text" class="form-control border-0 shadow" id="{{ form.title.label_for_id }}" name="{{ form.title.name }}" required autofocus />
+                        <label for="{{ form.title.id_for_label }}">Title</label>
+                        <input class="form-control" type="text" id="{{ form.title.id_for_label }}" name="{{ form.title.name }}">
                     </div>
-                    <div class="form-group">
-                        <label for="{{ form.description.label_for_id }}">Description</label>
-                        <textarea id="{{ form.description.label_for_id }}" name="{{ form.description.name }}" class="form-control border-0 shadow" required rows=18></textarea>
+                        <p>Post Image file:</p>
+                        <div class="custom-file mb-3">
+                          <input type="file" class="custom-file-input" id="{{ form.post_img.id_for_label }}" name="{{ form.post_img.name }}">
+                          <label class="custom-file-label" for="{{ form.post_img.id_for_label }}">Choose image file</label>
+                        </div>
+                    {{ form.description }}
+                    <div class="clearfix mt-3">
+                        <button formaction="{% url 'create_post' category 0 %}" type="submit" class="btn btn-secondary btn-md shadow float-left">Draft</button>
+                        <button type="submit" class="btn btn-primary btn-md shadow float-right">Publish</button>
                     </div>
-                    <div class="clearfix">
-                        <button type="submit" class="btn btn-md btn-secondary shadow float-right mb-5 mt-3">Publish</button>
-                    </div>
-                
-                {% csrf_token %}
+
                 </form>
 
             </div>
+                <span class="bg-secondary" style="width:10%; background-color:#0085A1;"></span>
         </div>
     </div>
 
 {% endblock content %}
+
+{% block scriptC %}
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor-init.js" %}"></script>
+    <script type="text/javascript" src="{% static "ckeditor/ckeditor/ckeditor.js" %}"></script>
+    <script>
+        $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+{% endblock scriptC %}

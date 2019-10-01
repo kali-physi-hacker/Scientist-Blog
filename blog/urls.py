@@ -16,12 +16,24 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from .views import home_page
+from django.conf import settings
+from django.conf.urls.static import static
+
+from .views import home_page, contact_page, about_page
+from Post.views import sample_post
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('posts/', include('Post.urls')),
     path('accounts/', include('users.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', home_page, name="home"),
+    path('contact/', contact_page, name="contact"),
+    path('about/', about_page, name="about"),
+    path('samplePosts/', sample_post, name="sample_posts"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
