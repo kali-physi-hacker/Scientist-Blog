@@ -26,12 +26,19 @@
   {% block custom_style %}
   {% endblock custom_style %}
 
+    <style>
+        body{
+            margin: 0!important;
+        }
+    </style>
+
 </head>
 
 <body>
 
+    {% block navbar %}
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
       <a class="navbar-brand" href="/">Kali Thinkers</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,14 +61,14 @@
           </li>
           {% if not user.is_authenticated %}
             <li class="nav-item">
-              <a id="loginLnk" class="nav-link btn btn-outline-{% block login_color %}{% endblock login_color %}" href="#" data-toggle="modal" data-target="#myModal">Login</a>
+              <a class="nav-link btn btn-outline-{% block login_color %}{% endblock login_color %}" href="{% url 'login' %}">Login</a>
             </li>
           {% endif %}
           {% if user.is_authenticated %}
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow float-right">
               <a style="text-transform:capitalize" class="nav-link dropdown-toggle text-light btn btn-primary" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span> <b> {{ user | capfirst }}</b></span>
+                  <span> <b> {{ user.first_name | capfirst }}</b></span>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -89,6 +96,7 @@
       </div>
     </div>
   </nav>
+    {% endblock navbar %}
 
   
   <!-- Page Header -->
@@ -162,17 +170,14 @@
                             </a></li>
                             <li class="nav-item">
                                 <a href="#signup" role="tab" data-toggle="tab" class="nav-link">
-                                    Don't Have An Account <i class="fa fa-user-plus"></i>
+                                    Don't Have An Account <i class="fa fa-user-plus ml-3"></i>
                                 </a>
                             </li>
                         </ul>
                     </div>
-                    <button type="button" class="close ml-0" data-dismiss="modal" aria-label="close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
                 <div class="modal-body">
-                    <div class="tab-content">
+                    <div class="tab-content p-4">
                         <div class="tab-pane active" id="login">
                             <form action="{% url 'login_user'%}" method="POST">
                               {% csrf_token %}
@@ -196,9 +201,9 @@
                         <div class="tab-pane fade in" id="signup">
                             <form method="POST" action="{% url 'signup_user' %}">
                                 <div class="form-group">
-                                    <label for="uname">Username</label>
+                                    <label for="id_username">Username</label>
                                     <i class="fa fa-user"></i>
-                                    <input type="text" class="form-control" id="id_username" name="username" autofocus />
+                                    <input type="text" class="form-control" id="id_username" name="username" autofocus required />
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
@@ -206,12 +211,12 @@
                                     <input type="email" class="form-control" id="id_email" name="email" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="pword">Password</label>
+                                    <label for="id_password1">Password</label>
                                     <i class="fa fa-key"></i>
                                     <input type="password" class="form-control" id="id_password1" name="password1" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="pword1">Confirm Password</label>
+                                    <label for="id_password2">Confirm Password</label>
                                     <i class="fa fa-key"></i>
                                     <input type="password" class="form-control" id="id_password2" name="password2" />
                                 </div>

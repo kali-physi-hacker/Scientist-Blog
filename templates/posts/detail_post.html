@@ -17,7 +17,7 @@
 
     <div class="container">
         <div class="row">
-          <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="col-lg-10 col-md-10 mx-auto">
                 <div class="post-preview">
                     <a>
                         <h2 class="post-title">
@@ -27,9 +27,11 @@
                         {{ post.description | safe }}
                         </p>
                     </a>
-                    <p class="post-meta">Posted by
+                    <p class="post-meta mt-5">Posted by
                         <a href="#">{{ post.author }}</a>
-                        on {{ post.published_date }}</p>
+                        on {{ post.published_date }}
+                        <a href="{% url 'edit_post' post.pk %}"><span class="fas fa-pen ml-3"></span></a>
+                    </p>
                 </div>
             </div>
         </div>

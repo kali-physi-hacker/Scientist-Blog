@@ -3,20 +3,63 @@
 {% block custom_style %}
     <style>
         body{
-            background: f3f5f7;
+            background: #f3f5f7;
+        }
+
+        .bg-primary{
+            background-color: #0085a1!important;
+            color: #ffffff;
         }
     </style>
 {% endblock custom_style %}
 
-{% comment 'header' %}
-{% block header %}
-{% endblock header %}
-{% endcomment %}
+{% block header %}{% endblock header %}
+{% block navbar %}{% endblock navbar %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            
+    <div class="container pt-5 border-top border-primary mb-5" style="border-top: 5px solid #0085a1!important; border-bottom: 3px solid #0085a1!important">
+         {% if messages %}
+            {% for message in messages %}
+                <div class="col-lg-12 mr-auto ml-auto alert bg-primary alert-dismissable pb-0 pt-0" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true" class="text-danger"><b>&times;</b></span>
+                    </button>
+                    <div class="row">
+                        <div class="mr-auto ml-auto">
+                        <p class="h5 mr-auto ml-auto mt-2">
+                             <b>
+                                {% if message.tags ==  "alert-danger" %}
+                                    <i class="fa fa-exclamation-triangle mr-3 text-danger"></i> {{ message }}
+                                {% else %}
+                                    <i class="fa fa-check"></i> {{ message }}
+                                {% endif %}
+                            </b>
+                        </p>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="row mt-5 pb-5">
+            <div class="col-7 shadow mx-auto">
+                <form action="{% url 'login_user' %}" method="post" class="p-5">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_email">Username or email <i class="fas fa-envelope"></i></label>
+                        <input type="email" class="form-control" id="id_email" name="email" required autofocus>
+                    </div>
+                    <div class="form-group mt-5 mb-5">
+                        <label for="{{ form.password.id_for_label }}">Password <i class="fas fa-key"></i></label>
+                        <input type="password" class="form-control" id="{{ form.password.id_for_label }}" name="{{ form.password.name }}" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-sm btn-primary shadow-sm mb-3 mt-4 d-none d-sm-inline-block">Login</button>
+                    <div class="clearfix">
+                        <p class="text-center h6">Forgot <a href="#">Password?</a></p>
+                        <p class="text-center h6 mt-0">Don't have an <i class="fas fa-user"></i> account? <a href="{% url 'signup' %}" class="">Signup</a></p>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 

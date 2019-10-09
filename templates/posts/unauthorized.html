@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block header %}{% endblock header %}
+{% block navbar %}{% endblock navbar %}
+
+{% block custom_style %}
+    <style>
+        .container.p-5{
+            border-right: 5px solid #0085a1;
+            margin-top: 1em;
+        }
+        .text-primary{
+            color: #0085a1!important;
+        }
+
+        div.col-9:first-child{
+            margin-top: 5em;
+        }
+
+        div.row div.col-9:first-child a.btn{
+            margin-bottom: 10em;
+        }
+    </style>
+{% endblock custom_style %}
+
+{% block content %}
+
+    <div class="container p-5">
+        <div class="row p-5">
+            <div class="col-9 shadow mr-auto ml-auto rounded-lg">
+                <p class="h2 text-center p-5 text-primary">You are not authorized to edit that post</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-9 ml-auto mr-auto">
+                <a href="#" onclick="history.back()" class="btn btn-primary">Back</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

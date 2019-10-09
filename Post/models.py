@@ -34,7 +34,7 @@ class Post(models.Model):
     category = models.IntegerField(choices=CATEGORY_CHOICES, null=True)
     post_img = models.ImageField(blank=True, null=True, upload_to=upload_image_path)
     # subtitle = models.CharField(max_length=100, null=True)
-    published = models.BooleanField(default=1)
+    published = models.BooleanField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(default=timezone.now)
     description = RichTextUploadingField()

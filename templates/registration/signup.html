@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block custom_style %}
+    <style>
+        .row{
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+
+        #left{
+            background-color: #245!important;
+            background: url("{% static 'img/home-bg.jpg' %}");
+            opacity: 0.8;
+            flex: 55%;
+        }
+
+        #right{
+            background-color: #f3f5f7;
+            flex: 45%;
+            padding: 50px;
+        }
+
+        .text-primary{
+            color: #0085a1!important;
+        }
+
+        @media screen and (max-width: 900px){
+            #right{
+                width: 100%;
+            }
+            #left{
+                display: none;
+            }
+        }
+
+        #head{
+            margin-top: 10em;
+        }
+
+        #head h1{
+            font-size: 3em;
+        }
+
+    </style>
+{% endblock custom_style %}
+
+{% block header %}{% endblock header %}
+{% block navbar %}{% endblock navbar %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div id="left">
+                <div class="row">
+                    <div class="col-9 mx-auto" id="head">
+                        <h1 class="text-primary h6">Kali Association of Scientist</h1>
+                        <p class="mb-5">
+                            The scientist of the next generation.<br>
+                            Our passion is to bring change into the world in which we live in <br>
+                            by teaching, researching and making our research practical by <br>
+                            inventing.
+                        </p>
+
+                        <p class="mt-5 h4 text-primary font-weight-bold text-center">The Quietor You Become, The More You Are Able To Hear.<br><span style="font-family: Chilanka; color: #939597!important;" class="font-weight-lighter">Dr. Brown Kali</span></p>
+                    </div>
+                </div>
+            </div>
+            <div id="right">
+                <h1 class="text-primary text-center p-0 mb-0 h1">Become A Member Today</h1>
+                <form action="{% url 'signup_user' %}" method="post" class="p-5 mt-1">
+                    {% csrf_token %}
+                    <div class="form-group pb-3">
+                        <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                        <input type="text" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" class="form-control" required autofocus>
+                    </div>
+                    <div class="form-group pb-3">
+                        <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                        <input type="text" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" class="form-control" required>
+                    </div>
+                    <div class="form-group pb-3">
+                        <label for="{{ form.email.id_for_label }}">Email</label>
+                        <input type="email" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" class="form-control" required>
+                    </div>
+                    <div class="form-group pb-3">
+                        <label for="{{ form.password1.id_for_label }}">Password</label>
+                        <input type="password" id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" class="form-control" required>
+                    </div>
+                    <div class="form-group pb-3">
+                        <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                        <input type="password" id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" class="form-control" required>
+                    </div>
+
+                    <div class="clearfix">
+                        <button type="submit" class="btn btn-primary btn-sm mb-3 mt-5">Signup</button>
+                        <div class="mt-5">
+                            <p class="h6 text-center text-primary">Already have an <i class="fas fa-user mr-1 ml-1"></i> Account?
+                            <a href="{% url 'login' %}">Login</a></p>
+                            <a href="{% url 'password_reset' %}"><p class="small h6 text-center text-primary mb-0 mt-1">Forgot Password?</p></a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
